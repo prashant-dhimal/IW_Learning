@@ -1,0 +1,52 @@
+
+
+<!DOCTYOE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>My Information</title>
+      <style>
+         .main {
+         text-align: left;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="main">
+         <img
+            height="100"
+            width="100"
+            id="displayimage"
+            >
+         <h2 id="names"> </h2>
+         <p id="bioda"></p>
+         <div id="list"></div>
+      </div>
+      <script>
+         //var uname = 'prashant-dhimal'
+         var repolist = document.getElementById("list");
+         fetch("https://api.github.com/users/prashant-dhimal")
+         .then(res => res.json())
+         .then(function (info){
+         rlist()
+         document.getElementById('displayimage').src = info['avatar_url']
+         document.getElementById('names').textContent = info['name']
+         document.getElementById('bioda').textContent= info['bio']
+         })
+         function rlist() {
+         var list = '';
+         fetch('https://api.github.com/users/prashant-dhimal/repos')
+         .then(res => res.json())
+         .then(function (info){
+         for (var i = 0; i < info.length; i++) {
+         list += '<a href=' + info[i].html_url + '><br>' + info[i].name + '</br></a>';
+         }
+         //.document.getElementById('list').InnerHTML = info['html_url']
+         repolist.innerHTML = list
+         })
+         }
+         
+      </script>
+   </body>
+</html>
+
